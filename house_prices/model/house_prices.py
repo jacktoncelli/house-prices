@@ -22,7 +22,7 @@ dropout_prob = 0.15
 data_dir = os.path.join(os.getcwd(), "data")
 train_csv = os.path.join(data_dir, "cleaned_train.csv")
 test_csv = os.path.join(data_dir, "cleaned_test.csv")
-validation_csv = os.path.join(data_dir, "validation.csv")
+validation_csv = os.path.join(data_dir, "cleaned_val.csv")
 
 # Load data
 train_dataset = HousePriceDataset(dataset_path=train_csv, dataset_type="train")
@@ -43,6 +43,7 @@ optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
 
 min_val_loss = float('inf')
+min_val_epoch = 0
 best_model_state_dict = None
 
 # Train for num_epochs epochs
@@ -67,10 +68,12 @@ for epoch in range(num_epochs):
     # Check for early stopping
     if total_val_loss < min_val_loss:
         min_val_loss = total_val_loss
+        min_val_epoch = epoch
         best_model_state_dict = copy.deepcopy(model.state_dict())
         patience_counter = 0
         
-    print(f"Epoch #{epoch}, loss:{total_val_loss}, min loss:{min_val_loss}")
+    print(f"Epoch #{epoch:3}, loss: {int(total_val_loss):5}, min loss: {int(min_val_loss):5} at epoch: {int(min_val_epoch):3}")
+
 
 # Load best model state
 if best_model_state_dict is not None:
