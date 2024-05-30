@@ -12,12 +12,12 @@ from neuralnet import NeuralNetHousePrice
 # Hyper parameters
 hidden_size1 = 128
 hidden_size2 = 64
-hidden_size3 = 16
+hidden_size3 = 32
 output_size = 1
 num_epochs = 500
 batch_size = 8
 learning_rate = 0.003
-dropout_prob = 0.15
+dropout_prob = 0.1
 
 data_dir = os.path.join(os.getcwd(), "data")
 train_csv = os.path.join(data_dir, "cleaned_train.csv")
